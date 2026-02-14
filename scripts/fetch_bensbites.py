@@ -17,89 +17,68 @@ def fetch_bensbites():
             )
             page = context.new_page()
             
-            # Go to homepage
-            url = "https://bensbites.beehiiv.com/"
+            # Go to new Substack homepage
+            url = "https://www.bensbites.com/"
             print(f"Navigating to {url}...", file=sys.stderr)
             
+            # Use the API endpoint for archive - much more reliable
+            api_url = "https://www.bensbites.com/api/v1/archive?sort=new&limit=12"
+            print(f"Fetching archive from API: {api_url}", file=sys.stderr)
+            
             try:
-                page.goto(url, timeout=60000, wait_until="domcontentloaded")
-            except Exception as e:
-                print(f"Navigation error: {e}", file=sys.stderr)
-            
-            # Wait a bit for cloudflare or dynamic content
-            page.wait_for_timeout(5000)
-            
-            # Debug title
-            title = page.title()
-            print(f"Page Title: {title}", file=sys.stderr)
-            
-            if "Just a moment" in title:
-                print("Still stuck in Cloudflare. Waiting 10s...", file=sys.stderr)
-                page.wait_for_timeout(10000)
-
-            # Extract posts from Homepage
-            # Beehiiv themes vary. Often have a "latest-posts" section or just a list of <a> tags
-            # Let's try to get ALL links and filter for likely posts
-            
-            links = page.query_selector_all('a')
-            seen_urls = set()
-            
-            for link in links:
-                try:
-                    href = link.get_attribute('href')
-                    if not href: continue
-                    
-                    # Normalize URL
-                    if href.startswith("/"):
-                        full_url = f"https://bensbites.beehiiv.com{href}"
-                    elif href.startswith("https://bensbites.beehiiv.com"):
-                        full_url = href
-                    else: 
-                        continue
-                     
-                    # Filter for post-like URLs. Beehiiv usually uses /p/slug
-                    if "/p/" not in full_url: continue
-                        
-                    if full_url in seen_urls: continue
-                    seen_urls.add(full_url)
-                    
-                    # Title extraction
-                    link_text = link.inner_text().strip()
-                    if len(link_text) < 10: 
-                        # Try to find a header child
-                        h_tag = link.query_selector("h1, h2, h3, h4")
-                        if h_tag: link_text = h_tag.inner_text().strip()
-                    
-                    if len(link_text) < 10: continue
-
+                page.goto(api_url, timeout=60000)
+                # Substack API returns JSON often wrapped in a <pre> or just raw
+                content = page.inner_text("body")
+                data = json.loads(content)
+                
+                # Substack API can return a list directly or a dict with 'posts'
+                posts = data if isinstance(data, list) else data.get('posts', [])
+                
+                for post in posts:
                     results.append({
                         "source": "Ben's Bites",
-                        "title": link_text,
-                        "url": full_url,
-                        "time": "Recent", 
-                        "summary": "AI News & Tools",
+                        "title": post.get('title'),
+                        "url": f"https://www.bensbites.com/p/{post.get('slug')}",
+                        "time": post.get('post_date', 'Recent').split('T')[0],
+                        "summary": post.get('subtitle', 'AI News & Tools'),
                     })
-                    
                     if len(results) >= 5: break
-                except: continue
-            
-            if not results:
-                # Fallback: try to grab the first big header as a single item if no list found (e.g. single landing page)
-                h1 = page.query_selector("h1")
-                title = h1.inner_text().strip() if h1 else "Ben's Bites Newsletter"
-                
-                # Check for meta description
+            except Exception as e:
+                print(f"API Fetch error: {e}. Falling back to DOM scraping...", file=sys.stderr)
+                # Fallback to homepage DOM scraping if API fails
                 try:
-                    meta_desc = page.get_attribute('meta[name="description"]', 'content')
-                    summary = meta_desc if meta_desc else "Daily AI Digest. Content protected, visit link."
-                except: summary = "Daily AI Digest. Content protected, visit link."
-                
+                    page.goto(url, timeout=60000, wait_until="domcontentloaded")
+                    page.wait_for_timeout(5000)
+                    links = page.query_selector_all('a')
+                    seen_urls = set()
+                    for link in links:
+                        href = link.get_attribute('href')
+                        if not href or "/p/" not in href: continue
+                        full_url = href if href.startswith("http") else f"https://www.bensbites.com{href}"
+                        if full_url in seen_urls: continue
+                        seen_urls.add(full_url)
+                        
+                        title_el = link.query_selector("h1, h2, h3, h4, .post-title")
+                        link_text = title_el.inner_text().strip() if title_el else link.inner_text().strip()
+                        
+                        if len(link_text) > 10:
+                            results.append({
+                                "source": "Ben's Bites",
+                                "title": link_text,
+                                "url": full_url,
+                                "time": "Recent",
+                                "summary": "AI News & Tools",
+                            })
+                        if len(results) >= 5: break
+                except: pass
+
+            if not results:
                 results.append({
                     "source": "Ben's Bites",
-                    "title": f"{title} (Latest)",
+                    "title": "Ben's Bites (Latest)",
                     "url": url,
                     "time": "Today", 
-                    "summary": summary,
+                    "summary": "Daily AI Digest. Content protected, visit link.",
                 })
 
             browser.close()

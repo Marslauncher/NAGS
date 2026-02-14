@@ -425,7 +425,7 @@ def fetch_huggingface_papers(limit=5, keyword=None):
 
 AI_NEWSLETTER_SOURCES = [
     # Bens Bites is protected by Cloudflare -> Use Playwright
-    ("Ben's Bites", "https://bensbites.beehiiv.com/feed"), 
+    ("Ben's Bites", "https://www.bensbites.com/feed"), 
     ("Interconnects", "https://www.interconnects.ai/feed"),  # Fixed: needs www.
     ("One Useful Thing", "https://www.oneusefulthing.org/feed"), 
     # Removed: The Rundown (beehiiv feed 404), The Neuron (403 Forbidden)
