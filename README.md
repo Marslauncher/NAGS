@@ -5,109 +5,78 @@
 [![GitHub stars](https://img.shields.io/github/stars/cclank/news-aggregator-skill.svg?style=social&label=Star)](https://github.com/cclank/news-aggregator-skill)
 [![GitHub forks](https://img.shields.io/github/forks/cclank/news-aggregator-skill.svg?style=social&label=Fork)](https://github.com/cclank/news-aggregator-skill/network)
 
-**全网科技/金融/AI深度新闻聚合助手，专为智能 Agent 打造的高效信息引擎。**
+News Aggregator Skill
+Python Version License: MIT GitHub stars GitHub forks
 
----
+A comprehensive news aggregation assistant covering technology, finance, and AI, and a highly efficient information engine designed specifically for intelligent agents.
 
-## ✨ 核心特性
+✨ Core Features
+🌍 Multi-source aggregation across the entire network : One-stop coverage of 28+ high-value sources spanning Silicon Valley technology, Chinese venture capital, open source communities, financial markets, and top AI podcasts/hardcore tweets.
+🚀 Perfect support for OpenClaw : Deeply customized for native large-model agent platforms (such as OpenClaw and Code Agent), plug and play, immersive information flow experience.
+🆓 Ready to use out of the box (Zero-Config) : Clean scraping, no need to configure any third-party API keys , say goodbye to cumbersome environment variables and quota anxiety.
+🧠 AI Intelligent Deep Fetch : Intelligently penetrates anti-crawler mechanisms (built-in Playwright bypasses Cloudflare), captures complete text content and hands it over to a large model for filtering, extraction and summarization.
+📰 Scenario-based Daily Briefings : Built-in multiple scenario presets (Comprehensive Daily Briefing, Financial Daily Briefing, Tech Daily Briefing, Gossip Daily Briefing, AI In-depth Daily Briefing), generate magazine-level formatted Markdown Chinese reports with one click.
+🪄 Magic Interactive Menu : Supports activating the global interactive menu with a unique password, say goodbye to tedious and complicated sentences, simply enter the number to point and select.
+📚 Aggregated Source Map
+The system now covers 28 mainstream high-value information channels worldwide, available for immediate use:
 
-- **🌍 全网多源聚合**：一站式覆盖跨越硅谷科技、中国创投、开源社区、金融市场以及顶级 AI 播客/硬核推文的 28+ 个高价值信源。
-- **🚀 完美支持 OpenClaw**：专为原生大模型 Agent 平台（如 OpenClaw、Code Agent）深度定制，即插即用，沉浸式体验信息流。
-- **🆓 开箱即用 (Zero-Config)**：纯净抓取，**无需配置任何第三方 API Key**，告别繁琐的环境变量和额度焦虑。
-- **🧠 AI 智能深度阅读 (Deep Fetch)**：智能穿透防爬虫机制（内置 Playwright 绕过 Cloudflare），抓取完整正文内容交给大模型过滤、提炼与总结。
-- **📰 场景化早报 (Daily Briefings)**：内置多套场景预设（综合早报、财经早报、科技早报、吃瓜早报、AI深度日报），一键生成杂志级排版的 Markdown 中文报告。
-- **🪄 魔法交互菜单**：支持通过专属口令唤醒全局交互式菜单，告别繁琐长难句，只需输入序号即可指哪打哪。
+🎯 Core News Source
+Global Tech : 🦄 Hacker News ( hackernews), 🐱 Product Hunt ( producthunt)
+Open source updates : 🐙 GitHub Trending ( github), 🤓 V2EX ( v2ex)
+Domestic risk control : 🚀 36Kr ( 36kr), 🐧 Tencent Technology ( tencent)
+Social Finance : 🔴 Weibo Trending Topics ( weibo), 📈 Wall Street News ( wallstreetcn)
+AI Paper : 🤗 Hugging Face Papers ( huggingface)
+📧 AI Industry Insider (Newsletters & Creators)
+🧪 Latent Space AINews ( latentspace_ainews) - (Recently Added)
+ChinAI (Jeffrey Ding) ( chinai)
+Memia (Ben Reid) ( memia)
+Ben's Bites ( bensbites)
+One Useful Thing (Ethan Mollick) (oneusefulthing)
+Interconnects (Nathan Lambert) (interconnects)
+AI to ROI & KDnuggets, etc...
+✍️ Deep Thinking & Podcast
+Industry Leaders Column : Paul Graham, James Clear, Wait But Why, Scott Young...
+Top-tier hardcore podcast : Lex Fridman Podcast, Latent Space (swyx), 80,000 Hours...
+📥 Installation Guide
+Step 1: Install to Code Agent
+Choose one of the following methods to add the Skill to your Agent:
 
----
+Method A: Using Openskills CLI (Recommended)
+It will automatically handle path dependencies and configuration synchronization.
 
-## 📚 聚合信源图谱
-
-系统现已覆盖全球 **28** 个主流高价值信息渠道，随取随用：
-
-### 🎯 核心新闻源
-- **全球科技**：🦄 Hacker News (`hackernews`), 🐱 Product Hunt (`producthunt`)
-- **开源进展**：🐙 GitHub Trending (`github`), 🤓 V2EX (`v2ex`)
-- **国内风控**：🚀 36Kr (`36kr`), 🐧 腾讯科技 (`tencent`)
-- **社会金融**：🔴 微博热搜 (`weibo`), 📈 华尔街见闻 (`wallstreetcn`)
-- **AI 论文**：🤗 Hugging Face Papers (`huggingface`)
-
-### 📧 AI 行业内参 (Newsletters & Creators)
-- **🧪 Latent Space AINews** (`latentspace_ainews`) - *（近期新增）*
-- **ChinAI (Jeffrey Ding)** (`chinai`)
-- **Memia (Ben Reid)** (`memia`)
-- **Ben's Bites** (`bensbites`)
-- **One Useful Thing (Ethan Mollick)** (`oneusefulthing`)
-- **Interconnects (Nathan Lambert)** (`interconnects`)
-- **AI to ROI & KDnuggets** 等...
-
-### ✍️ 深度思考 & 播客
-- **行业泰斗专栏**: Paul Graham, James Clear, Wait But Why, Scott Young...
-- **顶级硬核播客**: Lex Fridman Podcast, Latent Space (swyx), 80,000 Hours...
-
----
-
-## 📥 安装指南
-
-### 第一步：安装到 Code Agent
-
-选择以下任一方式将 Skill 添加到您的 Agent：
-
-#### 方法 A：使用 Openskills CLI (推荐)
-会自动处理路径依赖和配置同步。
-```bash
 # 安装 skill
 openskills install git@github.com:cclank/news-aggregator-skill.git
 
 # 同步配置到 Agent
 openskills sync
-```
+Method B: Using NPX
+Add directly from the remote repository.
 
-#### 方法 B：使用 NPX
-直接从远程仓库添加。
-```bash
 npx skills add https://github.com/cclank/news-aggregator-skill
-```
-
-#### 方法 C：手动集成
-```bash
+Method C: Manual Integration
 git clone git@github.com:cclank/news-aggregator-skill.git YourProject/.claude/skills/news-aggregator-skill
-```
+Step 2: Install Python dependencies
+Navigate to the directory where Skill is installed and perform the dependency installation (if your Agent is smart enough, you can request it to configure automatically):
 
-### 第二步：安装 Python 依赖
-进入已安装的 Skill 目录，执行依赖安装（如果您的 Agent 足够聪明，可要求其自动配置）：
-```bash
 cd YourProject/.claude/skills/news-aggregator-skill
 pip install -r requirements.txt
 playwright install chromium
-```
+🚀 How to use
+1. 🔮 Wake up the interactive menu (Recommended)
+The simplest and most engaging way to use it comes from a unique interactive easter egg: directly summon the smart command menu.
 
----
+"news-aggregator-skill Ruyi Ruyi"
 
-## 🚀 如何使用
+The system will immediately display a beautifully designed list of up to 35 function options. Simply reply with the number to generate today's market overview in perfect format!
 
-### 1. 🔮 唤醒交互菜单 (推荐)
+2. 🗣️ Natural Language Trigger
+You can also specify your requirements directly through the chat:
 
-最简单、最迷人的使用方式，来自专属交互彩蛋，直接召唤智能指令菜单：
+Scene Daily Report : "Could you get me a financial newsletter for today, to see what's happening in the market?"
+Deep Fetch : "Scrape 5 of the latest GitHub trends, and remember to enable Deep Fetch to read their READMEs in detail."
+Hardcore Scientific Research : "Let's see what amazing new papers HuggingFace has published today!"
+Free combination : "Help me combine the top ten trending topics from Hacker News, Wall Street Journal, and Weibo today into a morning newsletter."
+💡 Development and Expansion
+We welcome pull requests to connect the framework with new, high-quality global information sources. Our goal is to jointly build a clean, efficient, and interference -resistant information acquisition platform.
 
-> **"news-aggregator-skill 如意如意"**
-
-系统将立即为您展示多达 35 个功能选项的精美列表，直接回复数字序号即可生成完美排版的今日大盘！
-
-### 2. 🗣️ 自然语言触发
-
-您也可以直接通过对话指定需求：
-
-- **场景日报**："帮我跑一份 💰财经早报，看看今天华市有什么动静。"
-- **深度穿透**："抓取 5 条最新的 GitHub 趋势，记得开启 Deep Fetch 深入阅读下他们的 README。"
-- **硬核科研**："看看今天 HuggingFace 有什么新发的神仙论文？"
-- **自由组合**："帮我把 Hacker News, 华尔街见闻 和 微博热搜 今天的前十条揉在一起生成一个早报。"
-
----
-
-## 💡 开发与扩展
-
-欢迎提交 PR 为框架接入新的全球优质信源。我们期望共建一个**最纯净、最高效、抗干扰**的防降智信息获取舱。
-
-📝 **License**: MIT License
-
-
+📝 License : MIT License
